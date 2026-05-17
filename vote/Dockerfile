@@ -1,32 +1,33 @@
-# base defines a base stage that uses the official python runtime base image
-FROM python:3.11-slim AS base
+# Use lightweight Python image
+FROM python:3.11-slim
 
-# Add curl for healthcheck
-RUN apt-get update && \
-    apt-get install -y --no-install-recommends curl && \
-    rm -rf /var/lib/apt/lists/*
+# Prevent Python from writing pyc files
+ENV PYTHONDONTWRITEBYTECODE=1
 
-# Set the application directory
-WORKDIR /usr/local/app
+# Ensure logs appear immediately
+ENV PYTHONUNBUFFERED=1
 
-# Install our requirements.txt
-COPY requirements.txt ./requirements.txt
+# Set working directory
+WORKDIR /app
+
+# Install system dependencies
+RUN apt-get update && apt-get install -y \
+    gcc \
+    curl \
+    && rm -rf /var/lib/apt/lists/*
+
+
+# Copy requirements first for better layer caching
+COPY requirements.txt .
+
+# Install Python dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
-# dev defines a stage for development, where it'll watch for filesystem changes
-FROM base AS dev
-RUN pip install watchdog
-ENV FLASK_ENV=development
-CMD ["python", "app.py"]
-
-# final defines the stage that will bundle the application for production
-FROM base AS final
-
-# Copy our code from the current folder to the working directory inside the container
+# Copy application source code
 COPY . .
 
-# Make port 80 available for links and/or publish
+# Expose Flask port
 EXPOSE 80
 
-# Define our command to be run when launching the container
-CMD ["gunicorn", "app:app", "-b", "0.0.0.0:80", "--log-file", "-", "--access-logfile", "-", "--workers", "4", "--keep-alive", "0"]
+# Run application
+CMD ["python", "app.py"]
