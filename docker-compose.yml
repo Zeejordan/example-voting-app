@@ -14,5 +14,15 @@ services:
     container_name: my-redis
     ports:
       - "6379:6379"
+  
+  worker:
+    image: zeeshankhan001/worker-app-image:latest
+    container_name: worker-node
+    depends_on:
+      - redis
+      - postgreDB
 
+      
+  
+ 
 
