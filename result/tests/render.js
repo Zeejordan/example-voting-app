@@ -8,6 +8,7 @@ page.onLoadFinished = function() {
     phantom.exit();
   }, 1000);
 };
+// git check
 
 page.open(url, function() {
     page.evaluate(function() {
