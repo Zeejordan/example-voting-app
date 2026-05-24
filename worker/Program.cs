@@ -23,7 +23,7 @@ namespace Worker
                 var redisHost = Environment.GetEnvironmentVariable("REDIS_HOST");
 
                 var connectionString =
-    $"Server={dbHost};Username={dbUser};Password={dbPassword};";
+    $"Server={dbHost};Database=votingdb;Username={dbUser};Password={dbPassword};";
 
                 var pgsql = OpenDbConnection(connectionString);
 
