@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+
+metadata:
+  name: result-config
+  namespace: voting-dev
+
+data:
+  PORT: "4000"
+  POSTGRES_HOST: "postgres"

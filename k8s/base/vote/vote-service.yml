@@ -1,15 +1,16 @@
 apiVersion: v1
-
 kind: Service
 
-metadata: 
-  name: redis
+metadata:
+  name: vote
   namespace: voting-dev
 
 spec:
   selector:
-    app: redis
+    app: vote
+
   ports:
-    - port: 6379
-      targetPort: 6379
+    - port: 80
+      targetPort: 80
+
   type: ClusterIP
