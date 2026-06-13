@@ -28,7 +28,7 @@ spec:
 
           envFrom:
             - configMapRef:
-                name: result-config
+                name: app-config
 
             - secretRef:
                 name: postgres-secret

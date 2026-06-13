@@ -25,7 +25,7 @@ spec:
 
           envFrom:
             - configMapRef:
-                name: worker-config
+                name: app-config
 
             - secretRef:
                 name: postgres-secret
