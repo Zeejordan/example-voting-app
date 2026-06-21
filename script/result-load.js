@@ -1,0 +1,10 @@
+import http from 'k6/http';
+
+export const options = {
+  vus: 50,
+  duration: '2m',
+};
+
+export default function () {
+    http.get('http://localhost:4000');
+}
