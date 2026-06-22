@@ -1,0 +1,28 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - namespace.yml
+
+  - config/app-config.yml
+  - config/postgres-secret.yml
+
+  - hpa/result-hpa.yml
+  - hpa/vote-hpa.yml
+  
+  - ingress/voting-ingress.yml
+
+  - postgres/postgres-init-configmap.yml
+  - postgres/postgres-service.yml
+  - postgres/postgres-statefulset.yml
+
+  - redis/redis-deployment.yml
+  - redis/redis-service.yml
+
+  - result/result-deployment.yml
+  - result/result-service.yml
+
+  - vote/vote-deployment.yml
+  - vote/vote-service.yml
+
+  - worker/worker-deployment.yml
